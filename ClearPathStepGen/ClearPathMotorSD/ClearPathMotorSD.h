@@ -48,25 +48,54 @@
  */
 #ifndef ClearPathMotorSD_h
 #define ClearPathMotorSD_h
-#include "Arduino.h"
+#include <bcm2835.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <iostream>
+#include <thread> 
+
 class ClearPathMotorSD
 {
   public:
-  ClearPathMotorSD();
+  ClearPathMotorSD(): motorActivity(){
+    moveStateX=3;
+    PinA=0;
+    PinB=0;
+    PinE=0;
+    PinH=0;
+    Enabled=false;
+    VelLimitQx=0;					
+    AccLimitSteps=0;
+    AccLimitMM=0;
+    DeccLimitSteps=0;
+    DeccLimitMM=0;			
+    _TX=0;					
+    _Ta=0;				
+    _Td=0;				
+    _Ts=0;
+    _Vp=0;			
+    CommandX=0;
+    AbsPosition=0;
+    StepsPer100mm = 10000;
+  }
+  ~ClearPathMotorSD(){
+      CommandX = 0;
+        if(motorActivity.joinable()) motorActivity.join();
+  }
   void attach(int);
   void attach(int, int);
   void attach(int, int, int);
   void attach(int, int, int, int);
-  boolean move(long);
-  boolean moveFast(long);
+  bool moveInMM(long, int);
   void enable();
   long getCommandedPosition();
-  boolean readHLFB();
+  bool readHLFB();
   void stopMove();
-  int calcSteps();
-  void setMaxVel(long); 
-  void setMaxAccel(long);
-  boolean commandDone();
+  void stepsPer100mm(double);
+  void setMaxVelInMM(long); 
+  void setAccelInMM(long);
+  void setDeccelInMM(long);
+  bool commandDone();
   void disable();
 
   
@@ -74,33 +103,32 @@ class ClearPathMotorSD
   uint8_t PinB;
   uint8_t PinE;
   uint8_t PinH;
-  boolean Enabled; 
- int moveStateX;
+  bool Enabled; 
+  int moveStateX;
   volatile long AbsPosition;
   
   private:
+  void processMovement();
   volatile long CommandX;
-  boolean _direction;
+  bool _direction;
   uint8_t _BurstX;
+  std::thread motorActivity;
 
 // All of the position, velocity and acceleration parameters are signed and in Q24.8,
 // with all arithmetic performed in fixed point.
 
  int32_t VelLimitQx;					// Velocity limit
- int32_t AccLimitQx;					// Acceleration limit
- uint32_t MovePosnQx;					// Current position
- uint32_t StepsSent;				// Accumulated integer position
- int32_t VelRefQx;					// Current velocity
- int32_t AccelRefQx;					// Current acceleration
- long _TX;					// Current time
- long _TX1;				// End of ramp up time
- long _TX2;				// Beginning of phase 2 time
- long _TX3;				// Beginning of ramp down time
- long _TAUX;					// Integer burst value
- boolean _flag;
- long TargetPosnQx;						// Move length in Q24.8
- long TriangleMovePeakQx;	
- uint8_t fractionalBits;
+ double AccLimitSteps;					// Acceleration limit
+ double DeccLimitSteps;					// Acceleration limit
+ int32_t AccLimitMM;					// Acceleration limit
+ int32_t DeccLimitMM;					// Acceleration limit
+ double StepsPer100mm;
+ float _TX;   //current time
+ float _Ta;					// acceloration time
+ float _Td;				// decelleration time
+ float _Ts;        // Time at steady state
+ float _Vp;				// pulses at steady state
+ int pulseWidth;
 
 };
 #endif

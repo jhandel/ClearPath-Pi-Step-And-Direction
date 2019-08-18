@@ -1,0 +1,4 @@
+ClearPathStepGen/bin/*
+sample_app
+*.so
+__pycache__
