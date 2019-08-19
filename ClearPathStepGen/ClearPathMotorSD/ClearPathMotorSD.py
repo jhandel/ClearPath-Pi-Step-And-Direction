@@ -98,40 +98,40 @@ class ClearPathMotorSD(object):
         _ClearPathMotorSD.ClearPathMotorSD_swiginit(self, _ClearPathMotorSD.new_ClearPathMotorSD())
     __swig_destroy__ = _ClearPathMotorSD.delete_ClearPathMotorSD
 
-    def attach(self, *args):
+    def attach(self, *args) -> "void":
         return _ClearPathMotorSD.ClearPathMotorSD_attach(self, *args)
 
-    def moveInMM(self, arg2, arg3):
+    def moveInMM(self, arg2: 'long', arg3: 'int') -> "bool":
         return _ClearPathMotorSD.ClearPathMotorSD_moveInMM(self, arg2, arg3)
 
-    def enable(self):
+    def enable(self) -> "void":
         return _ClearPathMotorSD.ClearPathMotorSD_enable(self)
 
-    def getCommandedPosition(self):
+    def getCommandedPosition(self) -> "long":
         return _ClearPathMotorSD.ClearPathMotorSD_getCommandedPosition(self)
 
-    def readHLFB(self):
+    def readHLFB(self) -> "bool":
         return _ClearPathMotorSD.ClearPathMotorSD_readHLFB(self)
 
-    def stopMove(self):
+    def stopMove(self) -> "void":
         return _ClearPathMotorSD.ClearPathMotorSD_stopMove(self)
 
-    def stepsPer100mm(self, arg2):
+    def stepsPer100mm(self, arg2: 'double') -> "void":
         return _ClearPathMotorSD.ClearPathMotorSD_stepsPer100mm(self, arg2)
 
-    def setMaxVelInMM(self, arg2):
+    def setMaxVelInMM(self, arg2: 'long') -> "void":
         return _ClearPathMotorSD.ClearPathMotorSD_setMaxVelInMM(self, arg2)
 
-    def setAccelInMM(self, arg2):
+    def setAccelInMM(self, arg2: 'long') -> "void":
         return _ClearPathMotorSD.ClearPathMotorSD_setAccelInMM(self, arg2)
 
-    def setDeccelInMM(self, arg2):
+    def setDeccelInMM(self, arg2: 'long') -> "void":
         return _ClearPathMotorSD.ClearPathMotorSD_setDeccelInMM(self, arg2)
 
-    def commandDone(self):
+    def commandDone(self) -> "bool":
         return _ClearPathMotorSD.ClearPathMotorSD_commandDone(self)
 
-    def disable(self):
+    def disable(self) -> "void":
         return _ClearPathMotorSD.ClearPathMotorSD_disable(self)
     PinA = property(_ClearPathMotorSD.ClearPathMotorSD_PinA_get, _ClearPathMotorSD.ClearPathMotorSD_PinA_set)
     PinB = property(_ClearPathMotorSD.ClearPathMotorSD_PinB_get, _ClearPathMotorSD.ClearPathMotorSD_PinB_set)

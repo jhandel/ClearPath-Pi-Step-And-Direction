@@ -2,3 +2,5 @@ ClearPathStepGen/bin/*
 sample_app
 *.so
 __pycache__
+
+!placeholder.txt
